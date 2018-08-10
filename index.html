@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Matrix Calculator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/solid.css" integrity="sha384-wnAC7ln+XN0UKdcPvJvtqIH3jOjs9pnKnq9qX68ImXvOGz2JuFoEiCjT8jyZQX2z" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!--Just include the CSS for icons we need. Shaves 10kb off the page size.-->
+    <style>
+        /*!
+         * Font Awesome Free 5.2.0 by @fontawesome - https://fontawesome.com
+         * License - https://fontawesome.com/license (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+         */
+        .fas {
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
+            display: inline-block;
+            font-style: normal;
+            font-variant: normal;
+            text-rendering: auto;
+            line-height: 1;
+        }
+
+        .fas.fa-plus::before {
+            content: "\f067"
+        }
+
+        .fas.fa-minus::before {
+            content: "\f068"
+        }
+    </style>
+    <style>
+        #splash.splash-hidden {
+            opacity: 0;
+            top: -100vh;
+            height: 0;
+        }
+
+        #splash.splash-hidden-initial {
+            opacity: 0;
+            top: -100vh;
+        }
+
+        #splash.splash-shown {
+            opacity: 1;
+            top: 0;
+        }
+
+        #splash {
+            position: relative;
+            height: 100vh;
+            overflow-y: auto;
+            transition: opacity 0.3s ease 0s, top 1s ease 0s, height 1s ease 0s;
+        }
+
+        #main-fade-in {
+            transition: opacity 1s linear 0s;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container splash-hidden-initial" id="splash">
+        <div class="row mb-3"></div>
+        <div class="row">
+            <div class="col">
+                <h2>Linear Algebra Matrix Calculator</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p>Are you tired of using clunky calculators and websites to help you do your homework? Or worse yet, doing it by hand? Well you've come to the right place! This calculator allows you to add, subtract, multiply, divide, and scale matrices in a simple, intuitive user interface designed with your phone in mind. It even automatically displays the determinant for you! Are you ready to use the best matrix calculator on the web? Tap the button below to get started!</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-primary btn-block" id="launch">Launch Calculator</button>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col">
+                <p class="small">We won't display this message again after you launch the calculator. We'll let you get straight to work! ;)</p>
+            </div>
+        </div>
+        <footer class="footer">
+            <div class="row">
+                <div class="col">
+                    <p><small>Source code available on GitHub under Apache 2.0 license</small></p>
+                    <p><small>Copyright &copy; 2018-<span id="year">2018</span> Joshua Gammage</small></p>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <div id="main-fade-in">
+        <div id="main"></div>
+    </div>
+    <script>
+        document.getElementById("year").textContent = (new Date()).getFullYear();
+    </script>
+    <script src="./dist/matrix-index.js" async defer></script>
+</body>
+</html>
