@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import gcd from "./gcd.js";
+import isNaN from "../util/is-nan.js";
 import _lcm from "./lcm.js";
 
 function lcm(N) {
@@ -73,6 +74,8 @@ export default class Rational {
         if (!this.isNull()) {
             let realVal = this.n / this.d;
             if (Math.round(realVal) === realVal) return realVal.toString();
+        } else {
+            return null;
         }
         
         return `${this.n}/${this.d}`;
@@ -99,6 +102,27 @@ export default class Rational {
     }
     static multiply(...F) {
         return new Rational(F.reduce((p, c) => p * c.n, 1), F.reduce((p, c) => p * c.d, 1));
+    }
+    static parse(v) {
+        if (typeof v === "number") {
+            return new Rational(v);
+        } else if (typeof v === "string" && v.length > 0) {
+            let [n, d] = v.split("/");
+            // We're using an incredibly loose definition of "rational"
+            n = parseFloat(n);
+            d = parseFloat(d);
+            
+            if (!isNaN(n) && !isNaN(d)) {
+                return new Rational(n, d);
+            } else if (!isNaN(n)) {
+                return new Rational(n);
+            }
+        }
+
+        return new Rational(null);
+    }
+    static equal(a, b) {
+        return Rational.subtract(a, b).n === 0;
     }
     static divide(a, b) {
         return new Rational(a.n * b.d, a.d * b.n);

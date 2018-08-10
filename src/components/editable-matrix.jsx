@@ -21,6 +21,7 @@ import events from "../events.js";
 import EVENT_ID from "../model/event-ids.json";
 
 import matrices from "../matrices.js";
+import Rational from "../math/rational.js";
 
 import isNaN from "../util/is-nan.js";
 
@@ -29,9 +30,11 @@ import matrixCSS from "../styles/matrix.css";
 const DEFAULT_MIN = 1;
 const DEFAULT_MAX = 12;
 
-class DimensionControl extends React.PureComponent {
+class DimensionControl extends React.Component {
     constructor(props) {
         super(props);
+
+        this.validChars = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
         this.state = {
             displayValue: props.value.toString(),
@@ -69,7 +72,8 @@ class DimensionControl extends React.PureComponent {
                     </div>
                     <input
                         className="form-control"
-                        type="number"
+                        type="text"
+                        placeholder={this.state.value.toString()}
                         value={this.state.displayValue}
                         onChange={this.handleChange.bind(this)}
                     />
@@ -116,11 +120,11 @@ class DimensionControl extends React.PureComponent {
             ns.value = nv;
             this.props.onChange(nv);
         }
-
+        
         this.setState(ns);
     }
     handleChange(evt) {
-        this.setValue(evt.target.value);
+        this.setValue(evt.target.value.split("").filter(c => this.validChars.indexOf(c) > -1).join(""));
     }
     handleIncrement() {
         this.setValue(parseFloat(this.state.displayValue) + 1);
@@ -139,35 +143,51 @@ DimensionControl.propTypes = {
     onChange: PropTypes.func.isRequired
 };
 
-class MatrixInput extends React.Component {
+class MatrixInput extends React.PureComponent {
     constructor(props) {
         super(props);
 
+        this.validChars = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ".", "/"];
+
         this.state = {
-            displayValue: props.value == null ? "" : props.value.toString()
+            displayValue: props.value.n == null ? "" : props.value.toString(),
+            value: props.value
         };
+    }
+    componentWillReceiveProps(props) {
+        if (!Rational.equal(this.state.value, props.value)) {
+            this.setState({
+                displayValue: props.value.n == null ? "" : props.value.toString(),
+                value: props.value
+            });
+        }
     }
     render() {
         return (
             <input
                 className="form-control"
-                type="number"
+                type="text"
                 onChange={this.handleChange.bind(this)}
-                value={this.props.value == null ? this.state.displayValue : this.props.value}
+                value={this.state.displayValue}
                 placeholder="0"
             />
         );
     }
     handleChange(evt) {
-        if (evt.target.value !== this.state.displayValue) {
-            let v = parseFloat(evt.target.value);
-            this.setState({
-                displayValue: evt.target.value
-            });
+        let etv = evt.target.value;
+        if (etv !== this.state.displayValue) {
+            etv = etv.split("").filter(c => this.validChars.indexOf(c) > -1).join("");
+
+            let ns = {
+                displayValue: etv
+            };
             
-            if (!isNaN(v) || evt.target.value.length === 0) {
-                this.props.onChange(isNaN(v) ? null : v);
+            if (etv[0] !== "/" && etv[etv.length - 1] !== "/") {
+                ns.value = Rational.parse(etv);
+                this.props.onChange(evt.target.value.length > 0 ? evt.target.value : null);
             }
+
+            this.setState(ns);
         }
     }
 }
@@ -200,7 +220,7 @@ export default class EditableMatrix extends React.Component {
                                     {row.map((cell, y) => <td key={y}>
                                         <MatrixInput
                                             onChange={this.handleCellChange.bind(this, x, y)}
-                                            value={cell.toFloat()}
+                                            value={cell}
                                         />
                                     </td>)}
                                 </tr>)}
@@ -236,7 +256,7 @@ export default class EditableMatrix extends React.Component {
         matrices.setMatrixColumns(this.props.matrixID, h);
     }
     handleCellChange(x, y, v) {
-        matrices.setMatrixValue(this.props.matrixID, x, y, isNaN(v) ? null : v);
+        matrices.setMatrixValue(this.props.matrixID, x, y, v);
     }
 }
 

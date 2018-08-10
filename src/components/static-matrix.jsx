@@ -49,7 +49,7 @@ export default class StaticMatrix extends React.Component {
                                     {row.map((cell, y) => <td
                                         className="text-center"
                                         key={y}
-                                    >{isNaN(cell.toFloat()) ? 0 : cell.toFloat()}</td>)}
+                                    >{isNaN(cell.toFloat()) ? 0 : cell.toString()}</td>)}
                                 </tr>)}
                             </tbody>
                         </table>

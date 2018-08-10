@@ -230,7 +230,6 @@ function launchApp() {
 function init() {
     if (document.readyState === "interactive") {
         if (!localStorage) {
-            document.getElementById("splash").className = "container splash-shown";
             document.getElementById("launch").addEventListener("click", () => {
                 launchApp();
             });
@@ -238,7 +237,6 @@ function init() {
             if (localStorage.getItem("hideSplash") === "yes") {
                 launchApp();
             } else {
-                document.getElementById("splash").className = "container splash-shown";
                 document.getElementById("launch").addEventListener("click", () => {
                     localStorage.setItem("hideSplash", "yes");
                     launchApp();

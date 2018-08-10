@@ -186,7 +186,7 @@ export default class Matrix {
         }
     }
     setValue(i, j, v) {
-        this.values[i][j] = new Rational(v);
+        this.values[i][j] = Rational.parse(v);
     }
     toString() {
         return matrixToString(this.values);

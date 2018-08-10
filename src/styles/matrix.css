@@ -47,6 +47,7 @@ limitations under the License.
 
 .editable-matrix td {
     min-width: 42px;
+    padding: 1px !important;
 }
 
 .editable-matrix input, .dimension-control input {
@@ -55,10 +56,6 @@ limitations under the License.
 
 .editable-matrix input::placeholder, .dimension-control input::placeholder {
     color: rgba(0, 0, 0, 0.38)
-}
-
-.editable-matrix td {
-    padding: 1px;
 }
 
 .dimension-control button {

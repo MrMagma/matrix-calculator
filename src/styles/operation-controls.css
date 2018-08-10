@@ -15,6 +15,6 @@ limitations under the License.
 */
 
 .btn-outline-primary:hover, .btn-outline-primary:active {
-    background: transparent;
-    color: #007bff;
+    background: transparent !important;
+    color: #007bff !important;
 }

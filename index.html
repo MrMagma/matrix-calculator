@@ -3,33 +3,14 @@
 <head>
     <meta charset="utf-8"/>
     <title>Matrix Calculator</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/solid.css" integrity="sha384-wnAC7ln+XN0UKdcPvJvtqIH3jOjs9pnKnq9qX68ImXvOGz2JuFoEiCjT8jyZQX2z" crossorigin="anonymous">
+    <meta http-equiv="Cache-Control" content="public, max-age=2592000">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <!--Just include the CSS for icons we need. Shaves 10kb off the page size.-->
-    <style>
-        /*!
-         * Font Awesome Free 5.2.0 by @fontawesome - https://fontawesome.com
-         * License - https://fontawesome.com/license (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
-         */
-        .fas {
-            -moz-osx-font-smoothing: grayscale;
-            -webkit-font-smoothing: antialiased;
-            display: inline-block;
-            font-style: normal;
-            font-variant: normal;
-            text-rendering: auto;
-            line-height: 1;
-        }
-
-        .fas.fa-plus::before {
-            content: "\f067"
-        }
-
-        .fas.fa-minus::before {
-            content: "\f068"
-        }
-    </style>
+    <meta name="copyright" content="Copyright &copy; 2018 Joshua Gammage">
+    <meta name="description" content="Use this linear algebra calculator to add, subtract, multiply, divide, and scale matrices with precision and get your math homework done faster. You can also calculate precise matrix inverses and find determinants in the blink of an eye.">
+    <meta name="keywords" content="linear algebra, matrix, matrices, homework, math, calculator, calculate, determinant, inverse">
+    
+    <link rel="preload" href="https://use.fontawesome.com/releases/v5.2.0/webfonts/fa-solid-900.woff2" as="font" crossorigin="anonymous">
+    <link rel="subresource" href="./dist/matrix-index.js">
     <style>
         #splash.splash-hidden {
             opacity: 0;
@@ -70,7 +51,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <p>Are you tired of using clunky calculators and websites to help you do your homework? Or worse yet, doing it by hand? Well you've come to the right place! This calculator allows you to add, subtract, multiply, divide, and scale matrices in a simple, intuitive user interface designed with your phone in mind. It even automatically displays the determinant for you! Are you ready to use the best matrix calculator on the web? Tap the button below to get started!</p>
+                <p>Are you tired of using clunky calculators and websites to help you do your homework? Or worse yet, doing it by hand? Well you've come to the right place! Use this linear algebra calculator to add, subtract, multiply, divide, and scale matrices with precision and get your math homework done faster. You can also calculate precise matrix inverses and find determinants in the blink of an eye. Are you ready to use the best matrix calculator on the web? Tap the button below to get started!</p>
             </div>
         </div>
         <div class="row">
@@ -95,9 +76,61 @@
     <div id="main-fade-in">
         <div id="main"></div>
     </div>
+    <noscript id="deferred-styles">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+    </noscript>
+    <script>
+        var loadDeferredStyles = function() {
+            var addStylesNode = document.getElementById("deferred-styles");
+            var replacement = document.createElement("div");
+            replacement.innerHTML = addStylesNode.textContent;
+            document.body.appendChild(replacement)
+            addStylesNode.parentElement.removeChild(addStylesNode);
+        };
+        var raf = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
+            window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+        if (raf) raf(function() { window.setTimeout(loadDeferredStyles, 0); });
+        else window.addEventListener('load', loadDeferredStyles);
+    </script>
     <script>
         document.getElementById("year").textContent = (new Date()).getFullYear();
+
+        if (!localStorage || localStorage.getItem("hideSplash") !== "yes") {
+            document.getElementById("splash").className = "container splash-shown";
+        }
     </script>
+    <style>
+        /*!
+         * Font Awesome Free 5.2.0 by @fontawesome - https://fontawesome.com
+         * License - https://fontawesome.com/license (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+         */
+        @font-face {
+            font-family: "Font Awesome 5 Free";
+            font-style: normal;
+            font-weight: 900;
+            src: url("https://use.fontawesome.com/releases/v5.2.0/webfonts/fa-solid-900.woff2") format("woff2");
+        }
+
+        .fas {
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
+            display: inline-block;
+            font-style: normal;
+            font-variant: normal;
+            text-rendering: auto;
+            line-height: 1;
+            font-weight: 900;
+            font-family: "Font Awesome 5 Free";
+        }
+
+        .fas.fa-plus::before {
+            content: "\f067"
+        }
+
+        .fas.fa-minus::before {
+            content: "\f068"
+        }
+    </style>
     <script src="./dist/matrix-index.js" async defer></script>
 </body>
 </html>
