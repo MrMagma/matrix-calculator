@@ -50,6 +50,9 @@ export default class PageGrouping extends React.Component {
 }
 
 PageGrouping.propTypes = {
-    children: PropTypes.element.isRequired,
+    children: React.PropTypes.oneOfType([
+        React.PropTypes.arrayOf(React.PropTypes.node).isRequired,
+        React.PropTypes.node.isRequired
+    ]),
     hidden: PropTypes.bool
 };

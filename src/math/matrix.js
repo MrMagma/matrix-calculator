@@ -21,7 +21,7 @@ import Rational from "./rational.js";
 let memo = {};
 
 function matrixToString(M) {
-    return M.map(row => `[${row.join(",")}]`).join(",");
+    return `[${M.map(row => `[${row.join(",")}]`).join(",")}]`;
 }
 
 function determinant(M) {

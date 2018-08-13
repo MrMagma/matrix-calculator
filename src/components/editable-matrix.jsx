@@ -147,7 +147,7 @@ class MatrixInput extends React.PureComponent {
     constructor(props) {
         super(props);
 
-        this.validChars = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ".", "/"];
+        this.validChars = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ".", "/", "-"];
 
         this.state = {
             displayValue: props.value.n == null ? "" : props.value.toString(),
@@ -181,10 +181,12 @@ class MatrixInput extends React.PureComponent {
             let ns = {
                 displayValue: etv
             };
+
+            etv = etv.replace(/\s/, "");
             
-            if (etv[0] !== "/" && etv[etv.length - 1] !== "/") {
+            if (/^(?:\+|-)*[0-9]*\.*[0-9]+(\/(?:\+|-)*[0-9]*\.*[0-9]+)?$/.test(etv)) {
                 ns.value = Rational.parse(etv);
-                this.props.onChange(evt.target.value.length > 0 ? evt.target.value : null);
+                this.props.onChange(etv.length > 0 ? etv : null);
             }
 
             this.setState(ns);

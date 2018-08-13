@@ -5,6 +5,7 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const CleanPlugin = require("clean-webpack-plugin");
 
 module.exports = {
+    mode: "production",
     optimization: {
         minimizer: [
             new UglifyJSPlugin({

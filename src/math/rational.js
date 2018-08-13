@@ -18,15 +18,20 @@ import gcd from "./gcd.js";
 import isNaN from "../util/is-nan.js";
 import _lcm from "./lcm.js";
 
+/*
+I like to see this as a weird bastardization of the lcm algorithm that outputs signed numbers for some reason
+*/
 function lcm(N) {
-    let n = _lcm(N[0], N[1]);
+    let sign = Math.sign(N[0]) * Math.sign(N[1]);
+    let n = _lcm(Math.abs(N[0]), Math.abs(N[1]));
 
     for (let i = 2; i < N.length; ++i) {
         if (N[i] === 0) continue;
-        n = _lcm(n, N[i]);
+        n = _lcm(n, Math.abs(N[i]));
+        sign *= Math.sign(N[i]);
     }
 
-    return n;
+    return sign * n;
 }
 
 export default class Rational {
@@ -41,6 +46,11 @@ export default class Rational {
                 let f = gcd(Math.abs(n), Math.abs(d));
                 n /= f;
                 d /= f;
+            }
+
+            if ((n < 0 && d < 0) || (d < 0 && n > 0)) {
+                n *= -1;
+                d *= -1;
             }
         }
         
