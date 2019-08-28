@@ -201,7 +201,7 @@ export default class Matrix {
             }
         }
 
-        return T;
+        return new Matrix(T);
     }
     value(i, j) {
         return this.values[i][j];
